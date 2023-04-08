@@ -1,46 +1,63 @@
 
--- demo  (double dash is how you do comments in Tidal)
+-- ---------------------------------
+-- DEMO OF HOW TIDAL CYCLES WORKS --
+-- ---------------------------------
+-- for more see excellent docs here:
+-- https://tidalcycles.org/docs/
+-- ---------------------------------
 
+-- note double dash is how you do comments
+
+-- d1, d2, d3 etc. are channels
+-- to run a line or block of code hit command + enter (Mac)
+
+-- this is a very simple example
+d1 $ sound "drum"
+
+-- it can also be writtne like this, and have added amp
 d1
-  $ sound "drum*2"
+  $ sound "drum"
   # amp "4"
 
-d2 $ note "[c d e f g a b]" # sound "superpiano"
+-- an example using notes
+d1
+  $ note "[c d e f g a b ~]"
+  # sound "superpiano"
+
+-- to silence a channel
+d1 silence
+
+-- to silence all
+hush
+
+-- this shows how a cycle is alwasy runnign and has 4 beats
+d1
+  $ sound "drum hh hh hh"
+  # amp "4"
+
+-- to make somthing go longer that one cycle, one way is slow
+-- this effectively changes the quarter notes to half notes
+d1
+  $ slow 2
+  $ sound "drum hh hh hh"
+  # amp "4"
 
 d1 silence
 
-hush
+-- you can group using [ ]
+-- here the highhats become triplets
+d1
+  $ sound "[drum, hh hh hh]"
+  # amp "4"
 
-d2 $ qtrigger $ filterWhen (>= 0) # s "clap"
+-- you can use stack to run multiple thigns at omce
+d1
+  $ stack [
+  sound "drum" # amp "4",
+  sound "hh hh hh hh"
+  ]
 
-d1 $ qtrigger $ filterWhen (>=0) $ s "clap hh hh hh"
-
-hush
-
-wait 1 1 $ s "bd hh hh hh"
-
-d4 $ sound "drum hh hh hh"
-
--- rythms
--- euclidan rythm
--- https://forum.toplap.org/t/euclid-sequencing-in-place-of-randomness/466
-
--- clasp on beat 1. highhat on 1/8 note
-d1 $ stack  [
-  sound "cp cp cp cp",
-  sound "hh*8"
-]
-
--- 3/8 ...fitting 3 notes into an 8 note pattern
-d2 $ n "[d1(3,8)]/2" # s "rash" # amp "1.0"
-
-d2 $ n "[d1(3,8) f1(3,8) e1(3,8,2) a1(3,8,2)]/2" # s "rash" # amp "1.0"
-
-
-hush
-
--- drums
-
+-- example of a lot going on in a stack
 d1
   $ stack [
   sound "bd bd*2",
@@ -48,35 +65,38 @@ d1
   sound "arpy" +| n "0 .. 15"
   ]
 
-d1
-  $ stack [
-    n "0 ~ 0 ~" # s "live1",
-    sound "hh*4",
-    sound "cp"
-    ]
-
 d1 silence
-
-d2 $ n "~ 0 ~ 0" # s "live2"
-
-d3 $ slow 1 $ n "<c d e f g a b>" # s "live3"
-
-d4 $ n "0 2 4 7" # s "live4"
-
-d5 $ n "0 2 4 7" # s "live5"
-
-d6 $ n "0 2 4 7" # s "live8"
-
-d7 $ sound "~ hh ~ hh"
 
 hush
 
+-- rythms
+-- Euclidian rythm
+-- https://forum.toplap.org/t/euclid-sequencing-in-place-of-randomness/466
 
+-- 3/8 ...fitting 3 notes into an 8 note pattern
+d2 $ n "[d1(3,8)]/2" # s "arpy" # amp "1.0"
+
+d2 $ n "[d1(3,8) f1(3,8) e1(3,8,2) a1(3,8,2)]/2" # s "arpy" # amp "1.0"
+
+d2 silence
+
+hush
+
+-- all the sounds so far have come from within Supercollider
+-- but you can run sounds in you DAW (Ableton, Logic, whatevr) using Tidal
+-- note can be numbers not letters 0 = middle C = c5
+d3 $ n "0 2 4 7" # s "live4"
+
+d3 silence
+
+hush
+
+-- finally
 -- Crazy arpeggios with Tidalcycles - live coding improvised jam
 -- from here https://www.youtube.com/watch?v=C2GH5JmJwhU
 -- try to figure out what this stuff does
 
-d1
+d4
   $ whenmod 16 4 (|+| 3)
   $ jux (rev.(# s "jv").chunk 4 (iter 4))
   $ off 0.125 (|+| 12)
@@ -86,7 +106,11 @@ d1
   # resonance (range 0.03 0.6 $ slow 2.3 $ sine)
   # pan (range 0.1 0.9 $ rand)
 
-d2
+d5
   $ "[gabba*4, hh*8, [~ cp]*2]" # gain 1.2
+
+d4 silence
+
+d5 silence
 
 hush
