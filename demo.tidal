@@ -87,8 +87,18 @@ hush
 -- but you can run sounds in your DAW (Ableton, Logic, whatever) using Tidal
 -- check this out Controlling Ableton with Code – my live-coding setup and light tutorial
 -- https://www.youtube.com/watch?v=uNRa5prrGEY
--- note can be numbers: 0 = middle C = c5
-d3 $ n "0 2 4 7" # s "live4"
+
+d3 $ n "[-24*4, -18*8, -23]" # s "live1"
+
+-- ^ above:
+-- notes can be numbers: 0 = middle C = c5
+-- -24 is the kick, -18 is high hat and -23 is rim
+-- live1 is one of 8 MIDI ports I defined in Supercollider
+
+d3 $ n "0 2 4 7" # s "live2"
+
+-- ^ above:
+-- live2 is the Vital synth with the "lonely sine" preset and an autofilter
 
 d3 silence
 
