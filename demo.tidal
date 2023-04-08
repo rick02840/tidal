@@ -2,24 +2,25 @@
 -- ---------------------------------
 -- DEMO OF HOW TIDAL CYCLES WORKS --
 -- ---------------------------------
--- for more see excellent docs here:
+-- for more, see excellent docs here:
 -- https://tidalcycles.org/docs/
 -- ---------------------------------
 
--- note double dash is how you do comments
+-- double dash is how you do comments
+-- Tidal runs on top of Supercollider, which is what does all the sound processing
 
 -- d1, d2, d3 etc. are channels
--- to run a line or block of code hit command + enter (Mac)
+-- to run a line or block of code, hit COMMAND + ENTER (Mac)
 
--- this is a very simple example
+-- a very simple example
 d1 $ sound "drum"
 
--- it can also be writtne like this, and have added amp
+-- it can also be written as a block, and have added amp for volume
 d1
   $ sound "drum"
   # amp "4"
 
--- an example using notes
+-- an example using notes ( ~ is a rest)
 d1
   $ note "[c d e f g a b ~]"
   # sound "superpiano"
@@ -30,12 +31,12 @@ d1 silence
 -- to silence all
 hush
 
--- this shows how a cycle is alwasy runnign and has 4 beats
+-- this shows how a cycle is always running and has 4 beats
 d1
   $ sound "drum hh hh hh"
   # amp "4"
 
--- to make somthing go longer that one cycle, one way is slow
+-- to make something go longer than one cycle, one way is to use slow
 -- this effectively changes the quarter notes to half notes
 d1
   $ slow 2
@@ -45,16 +46,16 @@ d1
 d1 silence
 
 -- you can group using [ ]
--- here the highhats become triplets
+-- here the high hats become triplets
 d1
   $ sound "[drum, hh hh hh]"
   # amp "4"
 
--- you can use stack to run multiple thigns at omce
+-- you can use stack to run multiple things at omce
 d1
   $ stack [
   sound "drum" # amp "4",
-  sound "hh hh hh hh"
+  sound "hh hh hh hh" # amp "4"
   ]
 
 -- example of a lot going on in a stack
@@ -69,7 +70,7 @@ d1 silence
 
 hush
 
--- rythms
+-- RYTHMS
 -- Euclidian rythm
 -- https://forum.toplap.org/t/euclid-sequencing-in-place-of-randomness/466
 
@@ -83,8 +84,10 @@ d2 silence
 hush
 
 -- all the sounds so far have come from within Supercollider
--- but you can run sounds in you DAW (Ableton, Logic, whatevr) using Tidal
--- note can be numbers not letters 0 = middle C = c5
+-- but you can run sounds in your DAW (Ableton, Logic, whatever) using Tidal
+-- check this out Controlling Ableton with Code – my live-coding setup and light tutorial
+-- https://www.youtube.com/watch?v=uNRa5prrGEY
+-- note can be numbers: 0 = middle C = c5
 d3 $ n "0 2 4 7" # s "live4"
 
 d3 silence
@@ -92,9 +95,9 @@ d3 silence
 hush
 
 -- finally
--- Crazy arpeggios with Tidalcycles - live coding improvised jam
+-- "Crazy arpeggios with Tidalcycles - live coding improvised jam"
 -- from here https://www.youtube.com/watch?v=C2GH5JmJwhU
--- try to figure out what this stuff does
+-- Homework: try to figure out what this stuff does
 
 d4
   $ whenmod 16 4 (|+| 3)
@@ -106,10 +109,10 @@ d4
   # resonance (range 0.03 0.6 $ slow 2.3 $ sine)
   # pan (range 0.1 0.9 $ rand)
 
+d4 silence
+
 d5
   $ "[gabba*4, hh*8, [~ cp]*2]" # gain 1.2
-
-d4 silence
 
 d5 silence
 
