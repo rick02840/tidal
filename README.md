@@ -1,2 +1,3 @@
 # tidal
-My tidal repo
+My Tidal repo
+https://richardhoodcreative.com/

@@ -1,0 +1,92 @@
+
+-- demo  (double dash is how you do comments in Tidal)
+
+d1
+  $ sound "drum*2"
+  # amp "4"
+
+d2 $ note "[c d e f g a b]" # sound "superpiano"
+
+d1 silence
+
+hush
+
+d2 $ qtrigger $ filterWhen (>= 0) # s "clap"
+
+d1 $ qtrigger $ filterWhen (>=0) $ s "clap hh hh hh"
+
+hush
+
+wait 1 1 $ s "bd hh hh hh"
+
+d4 $ sound "drum hh hh hh"
+
+-- rythms
+-- euclidan rythm
+-- https://forum.toplap.org/t/euclid-sequencing-in-place-of-randomness/466
+
+-- clasp on beat 1. highhat on 1/8 note
+d1 $ stack  [
+  sound "cp cp cp cp",
+  sound "hh*8"
+]
+
+-- 3/8 ...fitting 3 notes into an 8 note pattern
+d2 $ n "[d1(3,8)]/2" # s "rash" # amp "1.0"
+
+d2 $ n "[d1(3,8) f1(3,8) e1(3,8,2) a1(3,8,2)]/2" # s "rash" # amp "1.0"
+
+
+hush
+
+-- drums
+
+d1
+  $ stack [
+  sound "bd bd*2",
+  sound "hh*2 [sn cp] cp future*4",
+  sound "arpy" +| n "0 .. 15"
+  ]
+
+d1
+  $ stack [
+    n "0 ~ 0 ~" # s "live1",
+    sound "hh*4",
+    sound "cp"
+    ]
+
+d1 silence
+
+d2 $ n "~ 0 ~ 0" # s "live2"
+
+d3 $ slow 1 $ n "<c d e f g a b>" # s "live3"
+
+d4 $ n "0 2 4 7" # s "live4"
+
+d5 $ n "0 2 4 7" # s "live5"
+
+d6 $ n "0 2 4 7" # s "live8"
+
+d7 $ sound "~ hh ~ hh"
+
+hush
+
+
+-- Crazy arpeggios with Tidalcycles - live coding improvised jam
+-- from here https://www.youtube.com/watch?v=C2GH5JmJwhU
+-- try to figure out what this stuff does
+
+d1
+  $ whenmod 16 4 (|+| 3)
+  $ jux (rev.(# s "jv").chunk 4 (iter 4))
+  $ off 0.125 (|+| 12)
+  $ off 0.25 (|+| 7)
+  $ n "[d1(3,8) f1(3,8) e1(3,8,2) a1(3,8,2)]/2" # s "rash"
+  # room 0.5 # size 0.6 # lpf (range 200 8000 $ slow 2 $ sine)
+  # resonance (range 0.03 0.6 $ slow 2.3 $ sine)
+  # pan (range 0.1 0.9 $ rand)
+
+d2
+  $ "[gabba*4, hh*8, [~ cp]*2]" # gain 1.2
+
+hush
