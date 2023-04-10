@@ -96,7 +96,7 @@ d3 $ n "[-24*4, -18*8, -23]" # s "live1"
 -- -24 is the kick, -18 is high hat and -23 is rim
 -- live1 is one of 8 MIDI ports I defined in Supercollider
 
-d3 $ n "0 2 4 7" # s "live4"
+d3 $ n "0 2 4 7" # s "live2"
 
 -- ^ above:
 -- live4 is the Vital synth with the "lonely sine" preset and an autofilter
