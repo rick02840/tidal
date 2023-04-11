@@ -15,6 +15,10 @@
 
 -- a very simple example
 d1 $ sound "drum"
+-- same as
+d1 $ sound "drum:0"
+-- try this
+d1 $ sound "drum:1"
 
 -- it can also be written as a block, and have added amp for volume
 d1
@@ -24,6 +28,11 @@ d1
 -- an example using notes ( ~ is a rest)
 d1
   $ note "[c d e f g a b ~]"
+  # sound "superpiano"
+
+-- same as:
+d1
+  $ note "[0 2 4 5 7 9 11 ~]"
   # sound "superpiano"
 
 -- to silence a channel
